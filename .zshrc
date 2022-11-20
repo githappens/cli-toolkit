@@ -14,6 +14,7 @@ alias gcm="git commit -am"
 alias gs="git status"
 alias gps="git push"
 alias gpl="git pull"
+alias gres="git restore"
 
 # add shell script folder to path
 export PATH="$HOME/scripts:$PATH"
