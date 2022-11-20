@@ -2,6 +2,10 @@
 alias editme="code ~/.zshrc"
 alias refreshme="source ~/.zshrc"
 
+alias sed="gsed"
+alias c="code"
+alias co="code ."
+
 # aliases for git
 alias g="git"
 alias gl="git log"
@@ -13,14 +17,7 @@ alias gpl="git pull"
 # Helper function for quickly updating remote of this file
 function saveme()
 (
-    argCount=$#
-    if [ $argCount < 1 ]
-    then
-        commitM="auto update"
-    else
-        commitM="$1"
-    fi
-
+    commitM=${1:-"auto update"}
     repoDir="$HOME/Development/Tools/cli-toolkit/"
     cp "$HOME/.zshrc" "$repoDir"
     cd -- "$repoDir" || exit
@@ -47,10 +44,10 @@ function _printHelp()
 function shallowclone()
 {
     helpResult=$(_printHelp $# 3 "<repo_url> <branch/tag> <depth>")
-    if [ helpResult != 0 ]
+    if [ $helpResult != "0" ]
     then
         echo "$helpResult"
-        return -1
+        return 1
     fi
 
     repo=$1
@@ -63,10 +60,10 @@ function shallowclone()
 function finderror()
 {
     helpResult=$(_printHelp $# 1 "<error code>")
-    if [ helpResult != 0 ]
+    if [ $helpResult != "0" ]
     then
         echo "$helpResult"
-        return -1
+        return 1
     fi
 
     grep -r -- $1 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks
