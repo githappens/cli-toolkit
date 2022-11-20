@@ -29,6 +29,7 @@ function saveme()
     cd -- "$repoDir" || exit
     git add .
     git commit -m $commitM
+    git pull
     git push
 )
 
