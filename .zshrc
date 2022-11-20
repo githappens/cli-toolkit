@@ -2,26 +2,31 @@
 alias editme="code ~/.zshrc"
 alias refreshme="source ~/.zshrc"
 
+# aliases for git
+alias g="git"
+alias gl="git log"
+alias gcm="git commit -am"
+alias gs="git status"
+alias gps="git push"
+alias gpl="git pull"
+
 # Helper function for quickly updating remote of this file
 function saveme()
-{
-    argCount=$1
+(
+    argCount=$#
     if [ $argCount < 1 ]
     then
         commitM="auto update"
     else
-        commitM="${1}"
+        commitM="$1"
     fi
 
-    repoDir="~/Development/Tools/cli-toolkit"
-    currentDir=$PWD
-    cp ~/.zshrc $repoDir
-    cd $repoDir
-    git commit -a -m $commitM
+    repoDir="$HOME/Development/Tools/cli-toolkit/"
+    cp "$HOME/.zshrc" "$repoDir"
+    cd -- "$repoDir" || exit
+    git commit -am $commitM
     git push
-
-    cd $currentDir
-}
+)
 
 # Helper function for printing help messages when a command is invoked incorrectly
 function _printHelp()
