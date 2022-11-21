@@ -16,8 +16,17 @@ alias gps="git push"
 alias gpl="git pull"
 alias gres="git restore"
 
+# Rescan all audio units
+alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
+
 # add shell script folder to path
 export PATH="$HOME/scripts:$PATH"
+
+# Remove audio unit build
+function rmau()
+{
+    rm -rf "/Library/Audio/Plug-Ins/Components/$1.component"
+}
 
 # Helper function for quickly updating the remote of this file
 function saveme()
@@ -33,29 +42,13 @@ function saveme()
     git push
 )
 
-# Helper function for printing help messages when a command is invoked incorrectly
-function _printHelp()
-{
-    argCount=$1
-    requiredArgCount=$2
-    helpMessage=$3
-    if [ $argCount != $requiredArgCount ]
-    then
-        echo "Passed in arg count: $1 Required arg count: $2 \nUsage: $funcstack[2] $helpMessage"
-        return
-    fi
-
-    echo "0"
-}
-
-# Shortcut for creating a shallow clone of a repo from a specific branch or tag
 function shallowclone()
 {
-    helpResult=$(_printHelp $# 3 "<repo_url> <branch/tag> <depth>")
-    if [ $helpResult != "0" ]
-    then
-        echo "$helpResult"
-        return 1
+    if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: $funcstack[1] repo-url branch-or-tag depth
+
+Shortcut for creating a shallow clone of a repo from a specific branch or tag."
+    return 0
     fi
 
     repo=$1
@@ -64,40 +57,37 @@ function shallowclone()
     git clone -b $2 --single-branch --depth $3 $1
 }
 
-# Look up an error code in the macOS SDK
 function finderror()
 {
-    helpResult=$(_printHelp $# 1 "<error code>")
-    if [ $helpResult != "0" ]
-    then
-        echo "$helpResult"
-        return 1
+    if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: $funcstack[1] error-code
+
+Looks up an error code in the macOS SDK."
+    return 0
     fi
 
     grep -r -- $1 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks
 }
 
-# Helper function to recursively look for files with wildcard matching in the given path
 function findfilesindir()
 {
-    helpResult=$(_printHelp $# 2 "<folder_path> <file_name>")
-    if [ $helpResult != "0" ]
-    then
-        echo "$helpResult"
-        return 1
+    if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: $funcstack[1] folder-path filename
+
+Recursively look for files with wildcard matching in the given path."
+    return 0
     fi
 
     find $1 -name "$2"
 }
 
-# Quickly add a new script in the scripts folder and open it for editing 
 function createscript()
 {
-    helpResult=$(_printHelp $# 1 "<script_name>")
-    if [ $helpResult != "0" ]
-    then
-        echo "$helpResult"
-        return 1
+    if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: $funcstack[1] script-name
+
+Generates a new shell script from the template."
+    return 0
     fi
 
     scriptDir="$HOME/scripts"
