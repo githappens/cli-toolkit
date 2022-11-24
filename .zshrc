@@ -19,6 +19,7 @@ alias gres="git restore"
 # Rescan all audio units
 alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
 
+
 # add shell script folder to path
 export PATH="$HOME/scripts:$PATH"
 
@@ -36,6 +37,7 @@ function saveme()
     cp "$HOME/.zshrc" "$repoDir"
     cp -r "$HOME/scripts" "$repoDir"
     cd -- "$repoDir" || exit
+    sed -i '/^# NONSYNC ZONE START/,/^# NONSYNC ZONE END/d' ".zshrc"
     git add .
     git commit -m $commitM
     git pull
@@ -67,18 +69,6 @@ Looks up an error code in the macOS SDK."
     fi
 
     grep -r -- $1 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.0.sdk/System/Library/Frameworks
-}
-
-function findfilesindir()
-{
-    if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
-    echo "Usage: $funcstack[1] folder-path filename
-
-Recursively look for files with wildcard matching in the given path."
-    return 0
-    fi
-
-    find $1 -name "$2"
 }
 
 function createscript()
