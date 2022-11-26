@@ -20,8 +20,19 @@ alias gres="git restore"
 alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
 
 
-# add shell script folder to path
-export PATH="$HOME/scripts:$PATH"
+# list of paths to add to PATH
+export _pathstoappend=("/opt/homebrew/opt/ccache/libexec" "$HOME/scripts")
+
+# initialization steps: load custom paths to PATH
+for pathtoadd in "${_pathstoappend[@]}"
+do
+  if [[ -z $(echo "$PATH" | grep "$pathtoadd") ]]; then
+      # append
+      path+=("$pathtoadd")
+      # export to sub-processes (make it inherited by child processes)
+      export PATH
+  fi
+done
 
 # Remove audio unit build
 function rmau()
