@@ -27,8 +27,8 @@ export _pathstoappend=("/opt/homebrew/opt/ccache/libexec" "$HOME/scripts")
 for pathtoadd in "${_pathstoappend[@]}"
 do
   if [[ -z $(echo "$PATH" | grep "$pathtoadd") ]]; then
-      # append
-      path+=("$pathtoadd")
+      # prepend
+      path=($pathtoadd $path)
       # export to sub-processes (make it inherited by child processes)
       export PATH
   fi
@@ -85,14 +85,15 @@ Looks up an error code in the macOS SDK."
 function createscript()
 {
     if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
-    echo "Usage: $funcstack[1] script-name
+    echo "Usage: $funcstack[1] script-name script-folder(optional)
 
-Generates a new shell script from the template."
+Generates a new shell script from the template.
+Script folder can be passed in as second argument optionally."
     return 0
     fi
 
-    scriptDir="$HOME/scripts"
-    cat  "$scriptDir/.scripttemplate" > "$scriptDir/$1.sh"
+    scriptDir=${2:-"$HOME/scripts"}
+    cat  "$HOME/scripts/.scripttemplate" > "$scriptDir/$1.sh"
     chmod 755 "$scriptDir/$1.sh"
     code "$scriptDir/$1.sh"
 }
