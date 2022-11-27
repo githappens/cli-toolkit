@@ -21,10 +21,10 @@ alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
 
 
 # list of paths to add to PATH
-export _pathstoappend=("/opt/homebrew/opt/ccache/libexec" "$HOME/scripts")
+export _mypaths=("/opt/homebrew/opt/ccache/libexec" "$HOME/scripts")
 
 # initialization steps: load custom paths to PATH
-for pathtoadd in "${_pathstoappend[@]}"
+for pathtoadd in "${_mypaths[@]}"
 do
   if [[ -z $(echo "$PATH" | grep "$pathtoadd") ]]; then
       # prepend
