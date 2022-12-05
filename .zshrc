@@ -53,7 +53,7 @@ function saveme()
     git add .
     git commit -m $commitM
     git pull
-    # git push
+    git push
 )
 
 function shallowclone()
