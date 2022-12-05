@@ -4,12 +4,14 @@ alias refreshme="source ~/.zshrc"
 
 # aliases for text editing
 alias sed="gsed"
+alias grep="ggrep"
 alias c="code"
 alias co="code ."
 
 # aliases for git
 alias g="git"
 alias gl="git log"
+alias gco="git checkout"
 alias gcm="git commit -am"
 alias gs="git status"
 alias gps="git push"
@@ -44,7 +46,6 @@ function rmau()
 function saveme()
 (
     commitM=${1:-"auto update"}
-    repoDir="$HOME/Development/Tools/cli-toolkit/"
     cp "$HOME/.zshrc" "$repoDir"
     cp -r "$HOME/scripts" "$repoDir"
     cd -- "$repoDir" || exit
@@ -52,7 +53,7 @@ function saveme()
     git add .
     git commit -m $commitM
     git pull
-    git push
+    # git push
 )
 
 function shallowclone()
@@ -97,3 +98,4 @@ Script folder can be passed in as second argument optionally."
     chmod 755 "$scriptDir/$1.sh"
     code "$scriptDir/$1.sh"
 }
+
