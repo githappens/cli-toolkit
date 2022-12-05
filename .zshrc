@@ -17,6 +17,16 @@ alias gs="git status"
 alias gps="git push"
 alias gpl="git pull"
 alias gres="git restore"
+alias gsu="git submodule update"
+function fix() { # creates a bugfix branch from the latest commit on main
+    git checkout main && git pull && git checkout -b bugfix/$1
+}
+function refactor() { # creates a refactor branch from the latest commit on main
+    git checkout main && git pull && git checkout -b refactor/$1
+}
+function addfeature() { # creates a feature branch from the latest commit on main
+    git checkout main && git pull && git checkout -b feature/$1
+}
 
 # Rescan all audio units
 alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
