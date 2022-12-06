@@ -19,13 +19,13 @@ alias gpl="git pull"
 alias gres="git restore"
 alias gsu="git submodule update"
 function fix() { # creates a bugfix branch from the latest commit on main
-    git checkout main && git pull && git checkout -b bugfix/$1
+    git checkout main && git pull && git checkout -b bugfix/$1 && git submodule update
 }
 function refactor() { # creates a refactor branch from the latest commit on main
-    git checkout main && git pull && git checkout -b refactor/$1
+    git checkout main && git pull && git checkout -b refactor/$1 && git submodule update
 }
 function addfeature() { # creates a feature branch from the latest commit on main
-    git checkout main && git pull && git checkout -b feature/$1
+    git checkout main && git pull && git checkout -b feature/$1 && git submodule update
 }
 
 # Rescan all audio units
