@@ -32,10 +32,12 @@ function addfeature() { # creates a feature branch from the latest commit on mai
 alias rescanau="killall -9 AudioComponentRegistrar; auval -al"
 
 
-# list of paths to add to PATH
+# --- Shell Initialization ---
+
+# List of paths to add to PATH
 export _mypaths=("/opt/homebrew/opt/ccache/libexec" "$HOME/scripts")
 
-# initialization steps: load custom paths to PATH
+# Load custom paths to PATH
 for pathtoadd in "${_mypaths[@]}"
 do
   if [[ -z $(echo "$PATH" | grep "$pathtoadd") ]]; then
@@ -45,6 +47,12 @@ do
       export PATH
   fi
 done
+
+# Return case insensitive matches
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+autoload -Uz compinit && compinit
+
+# --- Functions ---
 
 # Remove audio unit build
 function rmau()
