@@ -9,10 +9,8 @@ fi
 
 if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo 'Usage: ./updatemoduleincludes.sh path/to/user/module source-folder-name(optional)
-
 Scans through the src folder of the user module and updates the includes in the main module .h and .cpp files based on its content.
 The second argument is optionally the name of the source folder inside the module folder. Defaults to src when it is not passed in.
-
 '
     exit
 fi
